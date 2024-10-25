@@ -6,4 +6,8 @@ from datetime import datetime
 # a DAG startar no passado, catchup True faz ela processar aquilo que não foi processado de lá pra cá.
 dag = DAG('primeira_dag', description="Nossa primeira DAG", schedule_interval=None, start_date=datetime(2024,10,24), catchup=False)
 
-task1 = 
+task1 = BashOperator(task_id="tsk1", bash_command="sleep 5",dag=dag)
+task2 = BashOperator(task_id="tsk2", bash_command="sleep 2",dag=dag)
+task3 = BashOperator(task_id="tsk3", bash_command="sleep 3",dag=dag)
+
+task1 >> task2 >> task3
